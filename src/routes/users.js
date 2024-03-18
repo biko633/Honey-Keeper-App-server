@@ -175,10 +175,14 @@ router.post("/login", async (req, res, next) => {
       process.env.access_token_secret,
       maxAge
     );
-    res.cookie("token", token, {
-      maxAge: maxAge * 1000,
-      sameSite: "Lax",
-    });
+    const cookieHeaderValue = `token=${token}; Max-Age=${
+      maxAge * 1000
+    }; Path=/; SameSite=Lax`;
+    res.setHeader("Set-Cookie", cookieHeaderValue);
+    // res.cookie("token", token, {
+    //   maxAge: maxAge * 1000,
+    //   sameSite: "Lax",
+    // });
 
     return res.json({ Success: true, id: user.id });
   } catch (err) {
