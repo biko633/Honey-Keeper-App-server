@@ -172,7 +172,11 @@ router.post("/login", async (req, res, next) => {
       process.env.access_token_secret,
       maxAge
     );
-    res.cookie("token", token, { maxAge: maxAge * 1000 });
+    res.cookie("token", token, {
+      maxAge: maxAge * 1000,
+      sameSite: "none",
+      secure: true,
+    });
 
     return res.json({ Success: true, id: user.id });
   } catch (err) {

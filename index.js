@@ -21,9 +21,11 @@ app.use(cookieParser());
 app.use(express.json());
 
 const corsConfig = {
+  credentials: true,
   origin: [client_url, server_url],
   methods: ["GET", "POST", "PUT"],
-  credentials: true,
+  sameSite: "None",
+  secure: true, // Ensure that the Secure attribute is set
 };
 app.use(cors(corsConfig));
 
