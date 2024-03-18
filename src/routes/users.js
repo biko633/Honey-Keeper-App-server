@@ -128,7 +128,11 @@ router.post("/register", async (req, res, next) => {
         maxAge
       );
 
-      res.cookie("token", token, { maxAge: maxAge * 1000 });
+      res.cookie("token", token, {
+        maxAge: maxAge * 1000,
+        sameSite: "none",
+        secure: true,
+      });
 
       return res.json({ Success: true, id: newUserId });
     }
