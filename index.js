@@ -21,10 +21,9 @@ app.use(cookieParser());
 app.use(express.json());
 
 const corsConfig = {
-  credentials: true,
   origin: [client_url, server_url],
   methods: ["GET", "POST", "PUT"],
-  sameSite: "None",
+  credentials: true,
 };
 app.use(cors(corsConfig));
 
