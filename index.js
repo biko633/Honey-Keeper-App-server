@@ -14,6 +14,7 @@ dotenv.config();
 
 const port = process.env.PORT;
 const server_url = process.env.SERVER_URL;
+const client_url = process.env.CLIENT_URL;
 const app = express();
 
 app.use(cookieParser());
@@ -21,8 +22,9 @@ app.use(express.json());
 
 const corsConfig = {
   credentials: true,
-  origin: ["http://localhost:5173", server_url],
+  origin: [client_url, server_url],
   methods: ["GET", "POST", "PUT"],
+  sameSite: "None",
 };
 app.use(cors(corsConfig));
 
