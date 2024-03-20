@@ -87,7 +87,8 @@ router.get("/add_AccessToken", async (req, res, next) => {
     );
     res.cookie("token", access_token, {
       maxAge: access_maxAge * 1000,
-      sameSite: "Strict",
+      SameSite: "none",
+      secure: true,
     });
     res.json({ message: "Access token added" });
   } catch (err) {

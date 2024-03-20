@@ -24,7 +24,8 @@ const corsConfig = {
   credentials: true,
   origin: [client_url, server_url],
   methods: ["GET", "POST", "PUT"],
-  sameSite: "Strict",
+  SameSite: "none",
+  secure: true,
 };
 app.use(cors(corsConfig));
 
