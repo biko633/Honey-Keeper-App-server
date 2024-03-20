@@ -85,12 +85,24 @@ router.get("/add_AccessToken", async (req, res, next) => {
       process.env.access_token_secret,
       access_maxAge
     );
-    res.cookie("token", access_token, {
-      maxAge: access_maxAge * 1000,
-      SameSite: "None",
+    const cookieOptions = {
+      maxAge: maxAge * 1000,
+      sameSite: "None",
       secure: true,
-      httpOnly: false,
-    });
+    };
+
+    res.setHeader(
+      "Set-Cookie",
+      `token=${access_token}; ${Object.entries(cookieOptions)
+        .map(([key, value]) => `${key}=${value}`)
+        .join("; ")}`
+    );
+    // res.cookie("token", access_token, {
+    //   maxAge: access_maxAge * 1000,
+    //   SameSite: "None",
+    //   secure: true,
+    //   httpOnly: false,
+    // });
     res.json({ message: "Access token added" });
   } catch (err) {
     next(err);

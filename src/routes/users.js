@@ -127,13 +127,24 @@ router.post("/register", async (req, res, next) => {
         process.env.access_token_secret,
         maxAge
       );
-
-      res.cookie("token", token, {
+      const cookieOptions = {
         maxAge: maxAge * 1000,
-        SameSite: "None",
+        sameSite: "None",
         secure: true,
-        httpOnly: false,
-      });
+      };
+
+      res.setHeader(
+        "Set-Cookie",
+        `token=${token}; ${Object.entries(cookieOptions)
+          .map(([key, value]) => `${key}=${value}`)
+          .join("; ")}`
+      );
+      // res.cookie("token", token, {
+      //   maxAge: maxAge * 1000,
+      //   SameSite: "None",
+      //   secure: true,
+      //   httpOnly: false,
+      // });
 
       return res.json({ Success: true, id: newUserId });
     }
@@ -177,12 +188,24 @@ router.post("/login", async (req, res, next) => {
       process.env.access_token_secret,
       maxAge
     );
-    res.cookie("token", token, {
+    const cookieOptions = {
       maxAge: maxAge * 1000,
-      SameSite: "None",
+      sameSite: "None",
       secure: true,
-      httpOnly: false,
-    });
+    };
+
+    res.setHeader(
+      "Set-Cookie",
+      `token=${token}; ${Object.entries(cookieOptions)
+        .map(([key, value]) => `${key}=${value}`)
+        .join("; ")}`
+    );
+    // res.cookie("token", token, {
+    //   maxAge: maxAge * 1000,
+    //   SameSite: "None",
+    //   secure: true,
+    //   httpOnly: false,
+    // });
 
     return res.json({ Success: true, id: user.id });
   } catch (err) {
