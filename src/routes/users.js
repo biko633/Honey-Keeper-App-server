@@ -132,6 +132,7 @@ router.post("/register", async (req, res, next) => {
         maxAge: maxAge * 1000,
         SameSite: "None",
         secure: true,
+        httpOnly: false,
       });
 
       return res.json({ Success: true, id: newUserId });
@@ -180,6 +181,7 @@ router.post("/login", async (req, res, next) => {
       maxAge: maxAge * 1000,
       SameSite: "None",
       secure: true,
+      httpOnly: false,
     });
 
     return res.json({ Success: true, id: user.id });

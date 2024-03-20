@@ -89,6 +89,7 @@ router.get("/add_AccessToken", async (req, res, next) => {
       maxAge: access_maxAge * 1000,
       SameSite: "None",
       secure: true,
+      httpOnly: false,
     });
     res.json({ message: "Access token added" });
   } catch (err) {
