@@ -130,7 +130,7 @@ router.post("/register", async (req, res, next) => {
 
       res.cookie("token", token, {
         maxAge: maxAge * 1000,
-        SameSite: "none",
+        SameSite: "None",
         secure: true,
       });
 
@@ -178,7 +178,7 @@ router.post("/login", async (req, res, next) => {
     );
     res.cookie("token", token, {
       maxAge: maxAge * 1000,
-      SameSite: "none",
+      SameSite: "None",
       secure: true,
     });
 
