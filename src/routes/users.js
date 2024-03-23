@@ -127,18 +127,18 @@ router.post("/register", async (req, res, next) => {
         process.env.access_token_secret,
         maxAge
       );
-      const cookieOptions = {
-        maxAge: maxAge * 1000,
-        sameSite: "None",
-        secure: true,
-      };
+      // const cookieOptions = {
+      //   maxAge: maxAge * 1000,
+      //   sameSite: "None",
+      //   secure: true,
+      // };
 
-      res.setHeader(
-        "Set-Cookie",
-        `token=${token}; ${Object.entries(cookieOptions)
-          .map(([key, value]) => `${key}=${value}`)
-          .join("; ")}`
-      );
+      // res.setHeader(
+      //   "Set-Cookie",
+      //   `token=${token}; ${Object.entries(cookieOptions)
+      //     .map(([key, value]) => `${key}=${value}`)
+      //     .join("; ")}`
+      // );
       // res.cookie("token", token, {
       //   maxAge: maxAge * 1000,
       //   SameSite: "None",
@@ -146,7 +146,7 @@ router.post("/register", async (req, res, next) => {
       //   httpOnly: false,
       // });
 
-      return res.json({ Success: true, id: newUserId });
+      return res.json({ Success: true, id: newUserId, token: token });
     }
   } catch (err) {
     next(err);
@@ -188,18 +188,18 @@ router.post("/login", async (req, res, next) => {
       process.env.access_token_secret,
       maxAge
     );
-    const cookieOptions = {
-      maxAge: maxAge * 1000,
-      sameSite: "None",
-      secure: true,
-    };
+    // const cookieOptions = {
+    //   maxAge: maxAge * 1000,
+    //   sameSite: "None",
+    //   secure: true,
+    // };
 
-    res.setHeader(
-      "Set-Cookie",
-      `token=${token}; ${Object.entries(cookieOptions)
-        .map(([key, value]) => `${key}=${value}`)
-        .join("; ")}`
-    );
+    // res.setHeader(
+    //   "Set-Cookie",
+    //   `token=${token}; ${Object.entries(cookieOptions)
+    //     .map(([key, value]) => `${key}=${value}`)
+    //     .join("; ")}`
+    // );
     // res.cookie("token", token, {
     //   maxAge: maxAge * 1000,
     //   SameSite: "None",
@@ -207,7 +207,7 @@ router.post("/login", async (req, res, next) => {
     //   httpOnly: false,
     // });
 
-    return res.json({ Success: true, id: user.id });
+    return res.json({ Success: true, id: user.id, token: token });
   } catch (err) {
     next(err);
   }
@@ -216,7 +216,7 @@ router.post("/login", async (req, res, next) => {
 router.get("/userId", async (req, res, next) => {
   const token = req.query.token;
   try {
-    if (token === undefined) {
+    if (token === undefined || token === "") {
       return res.json({ empty: true });
     }
     const response = jwt.verify(
@@ -238,7 +238,7 @@ router.get("/userId", async (req, res, next) => {
 router.put("/logout", async (req, res) => {
   const userID = req.query.id;
   try {
-    res.clearCookie("token");
+    // res.clearCookie("token");
     const r_token = await RefreshTokenModel.deleteOne(userID);
     res.json({ status: "Success" });
   } catch (err) {

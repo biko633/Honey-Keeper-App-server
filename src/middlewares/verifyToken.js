@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 
 export const verifyToken = (req, res, next) => {
-  const token = req.cookies.token;
-  if (!token) {
+  const token = req.token;
+  if (!token || token === "") {
     req.errFound = {
       no_token: true,
       message:
