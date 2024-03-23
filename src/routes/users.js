@@ -235,16 +235,16 @@ router.get("/userId", async (req, res, next) => {
   }
 });
 
-router.put("/logout", async (req, res) => {
-  const userID = req.query.id;
-  try {
-    // res.clearCookie("token");
-    const r_token = await RefreshTokenModel.deleteOne(userID);
-    res.json({ status: "Success" });
-  } catch (err) {
-    res.json({ status: "Failed" });
-  }
-});
+// router.put("/logout", async (req, res) => {
+//   const userID = req.query.id;
+//   try {
+//     // res.clearCookie("token");
+//     const r_token = await RefreshTokenModel.deleteOne(userID);
+//     res.json({ status: "Success" });
+//   } catch (err) {
+//     res.json({ status: "Failed" });
+//   }
+// });
 
 router.post("/recover-info", async (req, res) => {
   const username = req.body.username;
