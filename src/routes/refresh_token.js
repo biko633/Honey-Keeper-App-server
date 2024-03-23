@@ -2,6 +2,7 @@ import express from "express";
 import { RefreshTokenModel } from "../models/RefreshToken.js";
 import { UserModel } from "../models/Users.js";
 import generateToken from "../middlewares/generateAccessToken.js";
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 // 60 MINUTES //
@@ -49,18 +50,16 @@ router.get("/add_refreshToken", async (req, res, next) => {
 });
 
 ////// CHECK IF THE USER HAS REFRESH TOKEN ////////
-router.get("/check_refreshToken", async (req, res, next) => {
-  const userID = req.query.id;
+router.get("/check_token", async (req, res, next) => {
+  const token = req.query.token;
   try {
-    if (userID.length !== 24) {
-      res.json({ error: "User id is wrong" });
-    }
-    const r_token = await RefreshTokenModel.findOne({ userId: userID });
-    if (r_token) {
-      res.json({ message: "Found" });
-    } else {
-      res.json({ message: "Not Found" });
-    }
+    jwt.verify(token, process.env.access_token_secret, (err, payload) => {
+      if (err) {
+        next(err);
+      } else {
+        res.json({ message: "Found" });
+      }
+    });
   } catch (err) {
     next(err);
   }
@@ -69,9 +68,9 @@ router.get("/check_refreshToken", async (req, res, next) => {
 router.get("/add_AccessToken", async (req, res, next) => {
   const userID = req.query.id;
   try {
-    if (userID.length !== 24) {
-      res.json({ error: "User id is wrong" });
-    }
+    // if (userID.length !== 24) {
+    //   res.json({ error: "User id is wrong" });
+    // }
     const user = await UserModel.findById(userID);
     if (!user) {
       ("you are not an authenticated user");
