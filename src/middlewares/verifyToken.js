@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import util from "util";
 
 export const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization || req.Authorization;
+  const token = req.headers.authorization || req.body.headers.Authorization;
   console.log("server token " + token);
   console.log("verifyToken called by:", req.route.path);
   // console.log("Request object:", req.Authorization);
