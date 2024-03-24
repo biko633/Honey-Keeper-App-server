@@ -50,7 +50,7 @@ router.post("/:userID", verifyToken, async (req, res, next) => {
 });
 
 //SAVE THE NOTE TO THE USER//
-router.put("/", verifyToken, async (req, res, next) => {
+router.post("/", verifyToken, async (req, res, next) => {
   if (req.errFound) {
     return res.json({ no_token: req.errFound });
   }
@@ -66,7 +66,7 @@ router.put("/", verifyToken, async (req, res, next) => {
 });
 
 //DELETE THE NOTE FROM THE USER AND NOTE MODEL//
-router.put("/deletedNote", verifyToken, async (req, res, next) => {
+router.post("/deletedNote", verifyToken, async (req, res, next) => {
   if (req.errFound) {
     return res.json({ no_token: req.errFound });
   }
