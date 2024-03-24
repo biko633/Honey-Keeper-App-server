@@ -4,7 +4,7 @@ export const verifyToken = (req, res, next) => {
   const token = req.headers.authorization || req.Authorization;
   console.log("server token " + token);
   console.log("verifyToken called by:", req.route.path);
-  console.log("Request object:", req);
+  console.log("Request object:", req.authorization);
   if (!token || token == "") {
     req.errFound = {
       no_token: true,
