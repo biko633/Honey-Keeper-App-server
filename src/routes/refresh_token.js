@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 // 60 MINUTES //
-var access_maxAge = 1 * 60;
+var access_maxAge = 60 * 60;
 // 120 MINUTES //
 var refresh_maxAge = 120 * 60;
 
