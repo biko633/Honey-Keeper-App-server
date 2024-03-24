@@ -13,40 +13,40 @@ var refresh_maxAge = 120 * 60;
 // generateToken is in seconds //
 // res.cookie is in milliseconds //
 
-router.get("/add_refreshToken", async (req, res, next) => {
-  const userID = req.query.id;
-  try {
-    if (userID.length !== 24) {
-      res.json({ error: "User id is wrong" });
-    }
-    const user = await UserModel.findById(userID);
-    if (!user) {
-      ("you are not an authenticated user");
-      res.json({ error: "you are not an authenticated user" });
-    } else {
-      const r_token = await RefreshTokenModel.findOne({ userId: userID });
-      if (r_token) {
-        await RefreshTokenModel.deleteOne({ userId: userID });
-      }
-      const payload = {
-        id: userID,
-      };
-      const refreshToken = generateToken(
-        payload,
-        process.env.refresh_token_secret,
-        refresh_maxAge
-      );
-      const newToken = new RefreshTokenModel({
-        userId: userID,
-        token: refreshToken,
-        expireAt: new Date(),
-      });
-      await newToken.save();
-      res.json({ message: "Refresh Added" });
-    }
-  } catch (err) {
-    next(err);
-  }
+router.get("/wait_for_token", async (req, res, next) => {
+  // const userID = req.query.id;
+  // try {
+  //   if (userID.length !== 24) {
+  //     res.json({ error: "User id is wrong" });
+  //   }
+  //   const user = await UserModel.findById(userID);
+  //   if (!user) {
+  //     ("you are not an authenticated user");
+  //     res.json({ error: "you are not an authenticated user" });
+  //   } else {
+  //     const r_token = await RefreshTokenModel.findOne({ userId: userID });
+  //     if (r_token) {
+  //       await RefreshTokenModel.deleteOne({ userId: userID });
+  //     }
+  //     const payload = {
+  //       id: userID,
+  //     };
+  //     const refreshToken = generateToken(
+  //       payload,
+  //       process.env.refresh_token_secret,
+  //       refresh_maxAge
+  //     );
+  //     const newToken = new RefreshTokenModel({
+  //       userId: userID,
+  //       token: refreshToken,
+  //       expireAt: new Date(),
+  //     });
+  //     await newToken.save();
+  res.json({ message: "waited" });
+  //   }
+  // } catch (err) {
+  //   next(err);
+  // }
 });
 
 ////// CHECK IF THE USER HAS REFRESH TOKEN ////////
