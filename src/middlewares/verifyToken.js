@@ -1,10 +1,13 @@
 import jwt from "jsonwebtoken";
+import util from "util";
 
 export const verifyToken = (req, res, next) => {
   const token = req.headers.authorization || req.Authorization;
   console.log("server token " + token);
   console.log("verifyToken called by:", req.route.path);
-  console.log("Request object:", req.authorization);
+  console.log("Request object:", req.Authorization);
+  console.log("Request:", util.inspect(req, { depth: null }));
+
   if (!token || token == "") {
     req.errFound = {
       no_token: true,
