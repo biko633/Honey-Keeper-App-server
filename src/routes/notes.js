@@ -67,7 +67,7 @@ router.put("/", verifyToken, async (req, res, next) => {
 
 //DELETE THE NOTE FROM THE USER AND NOTE MODEL//
 router.put("/deletedNote", verifyToken, async (req, res, next) => {
-  console.log("i am in the delete route " + req.body);
+  console.log("i am in the delete route " + JSON.stringify(req.body));
   if (req.errFound) {
     return res.json({ no_token: req.errFound });
   }
