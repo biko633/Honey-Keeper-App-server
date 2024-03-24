@@ -5,10 +5,7 @@ export const verifyToken = (req, res, next) => {
   const token = req.headers.authorization || req.Authorization;
   console.log("server token " + token);
   console.log("verifyToken called by:", req.route.path);
-  console.log("Request object:", req.Authorization);
-  if (req.route.path === "/deletedNote") {
-    console.log("Request:", util.inspect(req, { depth: null }));
-  }
+  // console.log("Request object:", req.Authorization);
 
   if (!token || token == "") {
     req.errFound = {
