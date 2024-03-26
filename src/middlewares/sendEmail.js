@@ -1,11 +1,13 @@
 import nodemailer from "nodemailer";
 
 export const sendMail = (email, email_token) => {
+  const site_email = process.env.SITE_EMAIL;
+  const site_password = process.env.SITE_PASSWORD;
   var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "HoneyKeeperApp@gmail.com",
-      pass: "rzsdruuqqtrkdocm",
+      user: site_email,
+      pass: site_password,
     },
   });
 
@@ -18,14 +20,18 @@ export const sendMail = (email, email_token) => {
     from: "HoneyKeeperApp@gmail.com",
     to: email,
     subject: "HoneyKeeperApp Reset password Link",
-    html: `<h1>Welcome</h1><h2>${link}</h2><p>That was easy!</p>`,
+    html: `<p>
+      <strong>Reset Your Password on HoneyKeeperApp</strong><br>
+      To reset your password, please click the link below:<br>
+      <a href="${link}" target="_blank">Reset Password</a>
+    </p>`,
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      error;
+      console, log(error);
     } else {
-      "Email sent: " + info.response;
+      console.log("Email sent: " + info.response);
     }
   });
 };
